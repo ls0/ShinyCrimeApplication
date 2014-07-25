@@ -1,0 +1,92 @@
+Shiny Crime Application
+===
+author: Coursera: Developing Data Products
+date: `r date()`
+transition: rotate
+transition-speed: fast
+type: prompt
+font-family:"Times New Roman"                
+
+Features of the Shiny Crime Application
+===
+transition: concave
+    
+                
+### Selection Boxes     
+- Two selection input boxes are available.            
+- Selection box allows choice of 1 of 50 United States.       
+- A second box allows for selection of a second state.   
+
+***
+
+### Output Plots            
+- Shows crime rate data from 1960-2012.      
+- Shows violent crime rates for each 100,000 individuals.
+- Shows property crime rate for each 100,000 individuals.       
+- Shows total crime rate for each 1000,000 individuals.   
+
+Shiny Crime Application Outputs
+========================================================
+transition: rotate
+### Output Plots (continued)     
+- Each ggplot shows 53 years of crime data for selected state, on a year by year basis.                 
+- The ggplots also show loess curve fit showing the crime trends over the 53 years.
+
+### Tab Outputs                                                        
+- The shiny crime application has 6 tabs:
+   - **Plot**, **State 1 Total**, **State 2 Total**, **Property Crime**, **Violent Crime**,  **Total Crime**.            
+   
+### Example of least **Total Crime** state.   
+```{r, echo=FALSE}
+library(reshape2)
+library(dplyr)
+crime.by.state <- read.csv("crime.by.state.csv")
+crime2012 <- crime.by.state %.%
+  filter(Year==2012) %.%
+  dcast(Year + State ~ Crime)
+typeTotal <- crime2012 %.%
+  select(State, Year, Total) %.%
+  arrange(Total) %.%
+  mutate(Order = 1:50) 
+head(typeTotal,1)
+```                                      
+Getting and Cleaning Data 
+===   
+### Getting Data      
+- Data was from FBI's uniform crime reports.    
+- Data was archived at: http://www.bjs.gov/ucrdata/Search/Crime/State/StateCrime.cfm     
+
+### Cleaning Data       
+- Two files containing property or violent crime data were downloaded.            
+- Files were combined and processed into a crime.by.state.csv file.   
+
+### The structure of the crime.by.state data set.
+```{r, echo=FALSE, strip.white=all}
+crime.by.state <- read.csv("crime.by.state.csv")
+str(crime.by.state, width = 32, strict.width = "cut")
+head(crime.by.state, 1)
+```
+
+
+
+Why use the Shiny Crime Application?
+===============================================
+### When vacationing
+
+- If you are traveling across the United States you can avoid high crime rate states...
+  - Or you can be prepared by packing heat.
+  
+### When moving
+- You may select a state like Maine, which has the lowest violent crime rate...
+  - Or you can bring the heat and join the fray...
+    - See you on visiting days.
+
+
+
+
+
+
+
+
+
+
